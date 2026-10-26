@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación de Personal - Carcajadas & Publicity Textil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+    .header-banner {
+      background: linear-gradient(135deg, #0d52cd 0%, #17387a 100%);
+      color: white;
+      padding: 25px 30px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+    .logo-container {
+      background-color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo-divider {
+      width: 1px;
+      height: 40px;
+      background-color: #d1d5db;
+    }
+    .header-title-box h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    .header-title-box p {
+      margin: 4px 0 0 0;
+      font-size: 0.95rem;
+      color: #dbeafe;
+      font-weight: 400;
+    }
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+    }
+    .card-header {
+      background-color: #ffffff;
+      border-bottom: 2px solid #e9ecef;
+      padding: 15px 20px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #0d52cd;
+      border-radius: 12px 12px 0 0 !important;
+    }
+    .card-subtitle-custom {
+      font-size: 0.9rem;
+      color: #6c757d;
+      font-weight: normal;
+      margin-top: 4px;
+    }
+    .instruction-box {
+      background-color: #eff6ff;
+      border-left: 4px solid #0d52cd;
+      padding: 18px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 25px;
+    }
+    .instruction-box ul {
+      margin-bottom: 0;
+      padding-left: 20px;
+    }
+    .question-row {
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+    .question-row:last-child {
+      border-bottom: none;
+    }
+    .form-check-input:checked {
+      background-color: #0d52cd;
+      border-color: #0d52cd;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, #0d52cd 0%, #17387a 100%);
+      color: white;
+      font-weight: bold;
+      padding: 14px 36px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 4px 12px rgba(13, 82, 205, 0.3);
+      transition: all 0.3s ease;
+    }
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #17387a 0%, #0d52cd 100%);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .footer-text {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      color: #6c757d;
+      font-size: 0.85rem;
+    }
+    .signature-pad-container {
+      border: 2px dashed #b9c7d9;
+      border-radius: 8px;
+      background: #fafafa;
+      position: relative;
+      touch-action: none;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 180px;
+      border-radius: 6px;
+      cursor: crosshair;
+    }
+    @media (max-width: 768px) {
+      .header-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+      .logo-container {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-4" style="max-width: 920px;">
+
+  <!-- ENCABEZADO OFICIAL -->
+  <div class="header-banner">
+    <div class="logo-container">
+      <img src="logo_carcajadas.png" alt="Carcajadas crea e innova" class="logo-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/130x45?text=Carcajadas';">
+      <div class="logo-divider"></div>
+      <img src="logo_publicity.png" alt="Publicity Textil" class="logo-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/110x45?text=Publicity';">
+    </div>
+    <div class="header-title-box">
+      <h1>EVALUACIÓN DE PERSONAL</h1>
+      <p>Departamento de Gestión Humana · Formato de evaluación de desempeño</p>
+    </div>
+  </div>
+
+  <form id="evaluationForm">
+
+    <!-- DATOS GENERALES -->
+    <div class="card">
+      <div class="card-header">Datos de la Evaluación</div>
+      <div class="card-body">
+        <div class="row g-3">
+          <!-- LISTA DESPLEGABLE DE EVALUADOS -->
+          <div class="col-md-5">
+            <label class="form-label fw-bold">Nombre del evaluado:</label>
+            <select class="form-select" id="selectEvaluado" name="nombre" required>
+              <option value="" selected disabled>Selecciona un colaborador...</option>
+            </select>
+          </div>
+          <!-- CÉDULA AUTOLLENADA -->
+          <div class="col-md-3">
+            <label class="form-label fw-bold">Cédula de Identidad:</label>
+            <input type="text" class="form-control bg-light" id="inputCedula" name="cedula" placeholder="Auto-completada" readonly required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Cargo:</label>
+            <input type="text" class="form-control" name="cargo" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Período:</label>
+            <input type="text" class="form-control" name="periodo" placeholder="Ej: Q1 / Ene-Mar" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Fecha:</label>
+            <input type="date" class="form-control" name="fecha" required>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold">Evaluador:</label>
+            <input type="text" class="form-control" name="evaluador" required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTRUCCIONES -->
+    <div class="instruction-box">
+      <h6 class="fw-bold mb-2">Antes de empezar, ten en cuenta lo siguiente:</h6>
+      <ul>
+        <li>Esta evaluación se basa en comportamientos reales, no en percepciones generales.</li>
+        <li>Responde pensando en situaciones concretas de los últimos meses.</li>
+        <li>Si tienes dudas entre dos opciones, elige la opción más exigente.</li>
+        <li>No evalúes intención, evalúa lo que realmente pasó.</li>
+        <li>Sé honesto: esta evaluación es para tomar decisiones, no para quedar bien.</li>
+      </ul>
+    </div>
+
+    <!-- SECCIÓN 1: CARÁCTER -->
+    <div class="card">
+      <div class="card-header">
+        1. Carácter
+        <div class="card-subtitle-custom">Responde de forma espontánea, si tienes dudas entonces la respuesta es NO.</div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead>
+              <tr>
+                <th>Pregunta</th>
+                <th class="text-center" style="width: 80px;">SÍ</th>
+                <th class="text-center" style="width: 80px;">NO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>En el día a día ¿Su presencia suma energía positiva al equipo?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_1" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_1" value="No"></td>
+              </tr>
+              <tr>
+                <td>En el trabajo con otros ¿Es una persona con la que es fácil colaborar?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_2" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_2" value="No"></td>
+              </tr>
+              <tr>
+                <td>Cuando enfrenta algo nuevo ¿Aprende rápido?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_3" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_3" value="No"></td>
+              </tr>
+              <tr>
+                <td>En su trabajo ¿Hace que las cosas pasen?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_4" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_4" value="No"></td>
+              </tr>
+              <tr>
+                <td>En su forma de actuar ¿Es transparente?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_5" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_5" value="No"></td>
+              </tr>
+              <tr>
+                <td>Cuando se comunica ¿Es claro y directo?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_6" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_6" value="No"></td>
+              </tr>
+              <tr>
+                <td>Cuando recibe críticas ¿Responde bien?</td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_7" value="Si" required></td>
+                <td class="text-center"><input class="form-check-input" type="radio" name="caracter_7" value="No"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: RESULTADOS -->
+    <div class="card">
+      <div class="card-header">
+        2. Resultados
+        <div class="card-subtitle-custom">Esta dimensión trata de evaluar si la persona cumple o no los objetivos en términos de alcance, tiempo y calidad. (Nota: Aquí NO evaluamos el CÓMO los logró).</div>
+      </div>
+      <div class="card-body">
+        <div class="question-row">
+          <p class="fw-bold mb-2">1. En los últimos 3 meses, En la mayoría de tareas que se le asignaron ¿Logró lo que se esperaba de su rol?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_1" id="res_1_a" value="La mayoría de las veces" required>
+            <label class="form-check-label" for="res_1_a">La mayoría de las veces</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_1" id="res_1_b" value="Pocas veces">
+            <label class="form-check-label" for="res_1_b">Pocas veces</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">2. En los últimos 3 meses, En la mayoría de tareas que se le asignaron ¿Qué tan cumplido fue en los tiempos de entrega?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_2" id="res_2_a" value="Muy cumplido" required>
+            <label class="form-check-label" for="res_2_a">Muy cumplido</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_2" id="res_2_b" value="Poco cumplido">
+            <label class="form-check-label" for="res_2_b">Poco cumplido</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">3. En los últimos 3 meses, En la mayoría de tareas que se le asignaron ¿El resultado que entregó era de la calidad que esperabas?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_3" id="res_3_a" value="La mayoría de las veces" required>
+            <label class="form-check-label" for="res_3_a">La mayoría de las veces</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="resultados_3" id="res_3_b" value="Pocas veces">
+            <label class="form-check-label" for="res_3_b">Pocas veces</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: EJECUCIÓN -->
+    <div class="card">
+      <div class="card-header">
+        3. Ejecución
+        <div class="card-subtitle-custom">Esta dimensión evalúa cómo trabaja en el día a día en: orden, autonomía y consistencia.</div>
+      </div>
+      <div class="card-body">
+        <div class="question-row">
+          <p class="fw-bold mb-2">1. En el día a día, cuando tiene varias tareas al mismo tiempo, ¿Logra organizarse y avanzar sin perder el control?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_1" id="eje_1_a" value="La mayoría de las veces" required>
+            <label class="form-check-label" for="eje_1_a">La mayoría de las veces</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_1" id="eje_1_b" value="Pocas veces">
+            <label class="form-check-label" for="eje_1_b">Pocas veces</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">2. Cuando se le asigna una tarea y no haces seguimiento, ¿Avanza por su cuenta hasta completarla?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_2" id="eje_2_a" value="La mayoría de las veces" required>
+            <label class="form-check-label" for="eje_2_a">La mayoría de las veces</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_2" id="eje_2_b" value="Pocas veces">
+            <label class="form-check-label" for="eje_2_b">Pocas veces</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">3. En su trabajo diario, ¿Mantiene un ritmo constante?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_3" id="eje_3_a" value="La mayoría de las veces mantiene el ritmo" required>
+            <label class="form-check-label" for="eje_3_a">La mayoría de las veces mantiene el ritmo</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="ejecucion_3" id="eje_3_b" value="Pocas veces lo mantiene">
+            <label class="form-check-label" for="eje_3_b">Pocas veces lo mantiene</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: CULTURA -->
+    <div class="card">
+      <div class="card-header">
+        4. Cultura
+        <div class="card-subtitle-custom">Esta dimensión evalúa cómo impacta al equipo en: relación, conflicto y actitud.</div>
+      </div>
+      <div class="card-body">
+        <div class="question-row">
+          <p class="fw-bold mb-2">1. En su interacción diaria con el equipo ¿Genera una relación fluida y colaborativa?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_1" id="cul_1_a" value="La mayoría de las veces" required>
+            <label class="form-check-label" for="cul_1_a">La mayoría de las veces</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_1" id="cul_1_b" value="Pocas veces">
+            <label class="form-check-label" for="cul_1_b">Pocas veces</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">2. Cuando hay desacuerdos o tensiones ¿Contribuye a resolverlos?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_2" id="cul_2_a" value="La mayoría de las veces ayuda a resolver" required>
+            <label class="form-check-label" for="cul_2_a">La mayoría de las veces ayuda a resolver</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_2" id="cul_2_b" value="Pocas veces lo hace">
+            <label class="form-check-label" for="cul_2_b">Pocas veces lo hace</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">3. En el día a día ¿Su actitud aporta al equipo?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_3" id="cul_3_a" value="La mayoría de las veces aporta" required>
+            <label class="form-check-label" for="cul_3_a">La mayoría de las veces aporta</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="cultura_3" id="cul_3_b" value="Pocas veces aporta">
+            <label class="form-check-label" for="cul_3_b">Pocas veces aporta</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5: CRECIMIENTO -->
+    <div class="card">
+      <div class="card-header">
+        5. Crecimiento
+        <div class="card-subtitle-custom">Esta dimensión evalúa su evolución en: aprendizaje, responsabilidad y adaptación.</div>
+      </div>
+      <div class="card-body">
+        <div class="question-row">
+          <p class="fw-bold mb-2">1. En los últimos meses ¿Ha mejorado en su capacidad o forma de trabajar?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_1" id="cre_1_a" value="La mayoría de las veces se ve mejora" required>
+            <label class="form-check-label" for="cre_1_a">La mayoría de las veces se ve mejora</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_1" id="cre_1_b" value="Pocas veces se ve mejora">
+            <label class="form-check-label" for="cre_1_b">Pocas veces se ve mejora</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">2. Cuando tiene oportunidad de asumir más responsabilidad ¿Lo hace?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_2" id="cre_2_a" value="La mayoría de las veces asume más" required>
+            <label class="form-check-label" for="cre_2_a">La mayoría de las veces asume más</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_2" id="cre_2_b" value="Pocas veces lo hace">
+            <label class="form-check-label" for="cre_2_b">Pocas veces lo hace</label>
+          </div>
+        </div>
+
+        <div class="question-row">
+          <p class="fw-bold mb-2">3. Cuando cambian las condiciones o aparecen retos nuevos ¿Logra adaptarse y responder?</p>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_3" id="cre_3_a" value="La mayoría de las veces se adapta" required>
+            <label class="form-check-label" for="cre_3_a">La mayoría de las veces se adapta</label>
+          </div>
+          <div class="form-check ms-3">
+            <input class="form-check-input" type="radio" name="crecimiento_3" id="cre_3_b" value="Pocas veces lo logra">
+            <label class="form-check-label" for="cre_3_b">Pocas veces lo logra</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 6: FEEDBACK ESPECÍFICO -->
+    <div class="card">
+      <div class="card-header">Retroalimentación Directa</div>
+      <div class="card-body">
+        <p class="fw-bold mb-3">¿Qué es exactamente lo que esta persona está haciendo que no te gusta o no suma a su rol y qué es exactamente lo que quieres que SÍ haga en su lugar?</p>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold text-danger">No hagas más esto por favor...</label>
+          <textarea class="form-control" name="no_hagas_mas" rows="3" placeholder="Escribe aquí las acciones a detener..." required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold text-success">En su lugar quiero que hagas esto...</label>
+          <textarea class="form-control" name="en_su_lugar" rows="3" placeholder="Escribe aquí los comportamientos esperados..." required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 7: BALANCE Y DECISIÓN FINAL -->
+    <div class="card">
+      <div class="card-header">Balance y Decisión Final</div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label fw-bold">1. ¿Qué fue lo que NO hizo bien esta persona en este período?</label>
+          <textarea class="form-control" name="no_hizo_bien" rows="3" required></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-bold">2. ¿Qué SÍ hizo muy bien esta persona en este período?</label>
+          <textarea class="form-control" name="si_hizo_bien" rows="3" required></textarea>
+        </div>
+
+        <hr class="my-4">
+
+        <p class="fw-bold mb-2">Selecciona solo una de las decisiones y explica por qué la seleccionaste, argumenta bien tu respuesta:</p>
+        
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="decision_final" id="dec_1" value="Puede ser promocionado a un ascenso" required>
+          <label class="form-check-label" for="dec_1">1. Puede ser promocionado a un ascenso</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="decision_final" id="dec_2" value="Continúa trabajando con nosotros">
+          <label class="form-check-label" for="dec_2">2. Continúa trabajando con nosotros</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="decision_final" id="dec_3" value="Continúa trabajando, pero bajo observación">
+          <label class="form-check-label" for="dec_3">3. Continúa trabajando, pero bajo observación</label>
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="radio" name="decision_final" id="dec_4" value="No continúa trabajando con nosotros">
+          <label class="form-check-label" for="dec_4">4. No continúa trabajando con nosotros</label>
+        </div>
+
+        <div class="mt-3">
+          <label class="form-label fw-bold">¿Por qué tomaste esa decisión?</label>
+          <textarea class="form-control" name="argumento_decision" rows="4" placeholder="Argumenta bien tu respuesta..." required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE FIRMA ELECTRÓNICA -->
+    <div class="card">
+      <div class="card-header">Firma Electrónica</div>
+      <div class="card-body">
+        <p class="small text-muted mb-3">Firme con el ratón o con el dedo en caso de dispositivos táctiles.</p>
+        
+        <div class="row g-4">
+          <!-- Firma Evaluador -->
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Firma del Evaluador / Líder:</label>
+            <div class="signature-pad-container">
+              <canvas id="padEvaluador" width="400" height="180"></canvas>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-secondary">Área de trazado</small>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="limpiarCanvas('padEvaluador')">Limpiar Firma</button>
+            </div>
+            <input type="hidden" name="firma_evaluador" id="firma_evaluador">
+          </div>
+
+          <!-- Firma Evaluado -->
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Firma del Colaborador (Evaluado):</label>
+            <div class="signature-pad-container">
+              <canvas id="padEvaluado" width="400" height="180"></canvas>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-secondary">Área de trazado</small>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="limpiarCanvas('padEvaluado')">Limpiar Firma</button>
+            </div>
+            <input type="hidden" name="firma_evaluado" id="firma_evaluado">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTÓN DE ENVÍO -->
+    <div class="text-center my-4">
+      <button type="submit" class="btn btn-submit btn-lg">Guardar y Enviar Evaluación</button>
+    </div>
+
+  </form>
+
+  <div class="footer-text">
+    Departamento de Gestión Humana · Todos los Derechos Reservados
+  </div>
+
+</div>
+
+<script>
+  // Listado oficial de colaboradores
+  const personalData = [
+    { cedula: "30797720", nombre: "ABRAHAM EDUARDO TALAVERA FIGUEROA" },
+    { cedula: "27355262", nombre: "ABRIL DE LOS ANGELES HERRERA ROBLES" },
+    { cedula: "21238388", nombre: "ADRIANO ALEJANDRO VILLEGAS FERREIRA" },
+    { cedula: "9335558",  nombre: "ALBA HAYDEE GARCIA PEREZ" },
+    { cedula: "27687416", nombre: "ANGELICA TIRADO UTRERA" },
+    { cedula: "25821581", nombre: "ARIANNY MICHELL PANDARE CASTILLO" },
+    { cedula: "26899100", nombre: "ARTURO DIMARCO ARROYO ARIAS" },
+    { cedula: "24104856", nombre: "BERNARDO JOSE FIGUEROA PEREZ" },
+    { cedula: "13635837", nombre: "BETZAIDA AMIGAIL DOUBRONT PEREZ" },
+    { cedula: "9356406",  nombre: "CARLOS ALEXIS PINEDA PINEDA" },
+    { cedula: "26900340", nombre: "CESAR RAGEL SANCHEZ RIERA" },
+    { cedula: "27356280", nombre: "CRISTIAN EDUARDO MEJIA QUINAL" },
+    { cedula: "24423718", nombre: "DANIEL FERNANDO CRUZ PETROCCINI" },
+    { cedula: "26034957", nombre: "DANIEL THOMAS MORILLO ARIAS" },
+    { cedula: "27188458", nombre: "DANIELA ALEJANDRA HERRERA RUMBOS" },
+    { cedula: "13889705", nombre: "DARGUIN GREGORIO CARRILLO OSORIO" },
+    { cedula: "25542730", nombre: "DARWIN BRANDO DIAZ ANGARITA" },
+    { cedula: "24925624", nombre: "DICMER EDUARDO RIVAS LEAL" },
+    { cedula: "31562332", nombre: "DIEGO ALEJANDRO VASQUEZ PINEDA" },
+    { cedula: "19366248", nombre: "EDELWIS ENRIQUE MORENO MARVEZ" },
+    { cedula: "16244055", nombre: "ERNESTO RAMON SANCHEZ APONTE" },
+    { cedula: "22518643", nombre: "EYVAN ANTONIO CARREÑO RIOS" },
+    { cedula: "30958960", nombre: "FRANCISCO ALEJANDRO HERRERA ARCILA" },
+    { cedula: "30783022", nombre: "HELEN NAOMY CAMPOS LOPEZ" },
+    { cedula: "14515947", nombre: "IYERANGEL ENELIN BERMUDEZ ZARATE" },
+    { cedula: "14080401", nombre: "JENYMAR GOMEZ DE CONTRERAS" },
+    { cedula: "26899041", nombre: "JESUS DE NAZARETH ALVAREZ FIGUEROA" },
+    { cedula: "29724796", nombre: "JESUS JAVIER LOPEZ MENDOZA" },
+    { cedula: "18360745", nombre: "JHOANA CAROLINA SERVEN VILLEGAS" },
+    { cedula: "14070921", nombre: "JHONNATTAN JOSE GUTIERREZ BREA" },
+    { cedula: "30758830", nombre: "JOEL ALBERTO RIVAS PAEZ" },
+    { cedula: "22007583", nombre: "JOEL GONZALO ROA TORREALBA" },
+    { cedula: "29834599", nombre: "JOHAN ELISAUD SEMPRUM QUINTERO" },
+    { cedula: "27372518", nombre: "JOINER JOEL ATIENZO GONZALEZ" },
+    { cedula: "19821751", nombre: "JOSE ANGEL COLINA MEDINA" },
+    { cedula: "29867687", nombre: "JOSE DANIEL ARTEAGA ARAUJO" },
+    { cedula: "30334948", nombre: "JOSE DANIEL PINTO VALIENTE" },
+    { cedula: "30733790", nombre: "KATHERINA ESTEFANIA CUELLO GONZALEZ" },
+    { cedula: "25874062", nombre: "KLEIVER SMITCH ASCANIO RUIZ" },
+    { cedula: "32763369", nombre: "LUIS ALEJANDRO PEÑA FUENMAYOR" },
+    { cedula: "32012798", nombre: "LUIS ALEJANDRO POLANCO RAMOS" },
+    { cedula: "11528600", nombre: "LUIS ARMANDO HENRIQUEZ GUEDEZ" },
+    { cedula: "30855229", nombre: "LUIS SAUL IGLESIA ARTEAGA" },
+    { cedula: "22216715", nombre: "MARIA FERNANDA NADALES LAMAS" },
+    { cedula: "24917240", nombre: "MARIA JOSE VILLEGAS CONTRERAS" },
+    { cedula: "30155439", nombre: "MARIANGEL CAROLINA MARTINEZ ALMERIDA" },
+    { cedula: "27173475", nombre: "MARIANNY MARINA SEQUERA CANDELA" },
+    { cedula: "24348148", nombre: "MAYERLIN MILAGROS MUJICA MARIN" },
+    { cedula: "20384599", nombre: "MIGUEL ALEJANDRO PEROZA RUMBOS" },
+    { cedula: "7076633",  nombre: "MIGUEL EDUARDO IZAGUIRRE HIDALGO" },
+    { cedula: "29550657", nombre: "MILESKA DEL VALLE GONZALEZ LOYO" },
+    { cedula: "14957787", nombre: "MIRIAM CAROLINA DIAZ CELIS" },
+    { cedula: "12525712", nombre: "NALKY MILENA PACHECO GONZALEZ" },
+    { cedula: "26390852", nombre: "NESTOR GUSTAVO PEREZ NAVAS" },
+    { cedula: "15334064", nombre: "ORLANDO SUAREZ OVIEDO" },
+    { cedula: "21478972", nombre: "OSMAN ENRIQUE SANCHEZ ROA" },
+    { cedula: "27725940", nombre: "PAOLA VALENTINA ESTEBAN PARRA" },
+    { cedula: "20024234", nombre: "RAQUEL SINAI ESCORCHA JIMENEZ" },
+    { cedula: "29849604", nombre: "RICHARD PARRA LIRA" },
+    { cedula: "18097026", nombre: "ROBERT JESUS DIAZ GOMEZ" },
+    { cedula: "24348128", nombre: "ROREELIS ANDREINA LEÓN SALAZAR" },
+    { cedula: "29849810", nombre: "RUTH AIDEE HERNANDEZ VILLEGAS" },
+    { cedula: "24637324", nombre: "RUTH MARIALEJANDRA SILVA MONTOYA" },
+    { cedula: "13194056", nombre: "SORALIS OLIVARES GUILLEN" },
+    { cedula: "30758319", nombre: "VALERIA ALEXANDRA HERNANDEZ APONTE" },
+    { cedula: "28509416", nombre: "WILLIAMS CESAR DAVID GIL PAEZ" },
+    { cedula: "19744358", nombre: "WILLIANS ADELIS MARIN CORONADO" },
+    { cedula: "11358307", nombre: "YONEIDA ELENA VILLALOBOS VILLEGAS" },
+    { cedula: "29696896", nombre: "YOXANY MARIA HERNANDEZ LOPEZ" },
+    { cedula: "18748239", nombre: "YULY ANDREINA OCHOA OROZCO" },
+    { cedula: "31581437", nombre: "ZIARA ALEXANDRA BECERRA RANGEL" }
+  ];
+
+  // Cargar opciones en el select y asociar el cambio automático de cédula
+  const selectEvaluado = document.getElementById('selectEvaluado');
+  const inputCedula = document.getElementById('inputCedula');
+
+  personalData.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.nombre;
+    opt.textContent = p.nombre;
+    opt.dataset.cedula = p.cedula;
+    selectEvaluado.appendChild(opt);
+  });
+
+  selectEvaluado.addEventListener('change', function() {
+    const optSeleccionada = this.options[this.selectedIndex];
+    inputCedula.value = optSeleccionada.dataset.cedula || '';
+  });
+
+  // Funciones de firma digital
+  function initSignaturePad(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    let dibuja = false;
+    let haFirmado = false;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0d2238';
+
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY
+      };
+    }
+
+    function empezar(e) {
+      dibuja = true;
+      haFirmado = true;
+      const p = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      if (e.cancelable) e.preventDefault();
+    }
+
+    function trazar(e) {
+      if (!dibuja) return;
+      const p = getCoords(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      if (e.cancelable) e.preventDefault();
+    }
+
+    function terminar() {
+      dibuja = false;
+    }
+
+    canvas.addEventListener('mousedown', empezar);
+    canvas.addEventListener('mousemove', trazar);
+    window.addEventListener('mouseup', terminar);
+
+    canvas.addEventListener('touchstart', empezar, { passive: false });
+    canvas.addEventListener('touchmove', trazar, { passive: false });
+    canvas.addEventListener('touchend', terminar);
+
+    canvas.haFirmado = () => haFirmado;
+    canvas.resetEstado = () => { haFirmado = false; };
+  }
+
+  function limpiarCanvas(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.resetEstado();
+  }
+
+  initSignaturePad('padEvaluador');
+  initSignaturePad('padEvaluado');
+
+  // Validación y envío
+  document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const canvasEvaluador = document.getElementById('padEvaluador');
+    const canvasEvaluado = document.getElementById('padEvaluado');
+
+    if (!canvasEvaluador.haFirmado()) {
+      alert('Por favor, ingresa la firma del Evaluador antes de enviar.');
+      return;
+    }
+
+    document.getElementById('firma_evaluador').value = canvasEvaluador.toDataURL('image/png');
+    if (canvasEvaluado.haFirmado()) {
+      document.getElementById('firma_evaluado').value = canvasEvaluado.toDataURL('image/png');
+    }
+
+    alert('¡Evaluación y firmas guardadas exitosamente!');
+  });
+</script>
+</body>
+</html>
